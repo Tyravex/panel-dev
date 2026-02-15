@@ -1,5 +1,31 @@
+# Node modules
 node_modules/
+**/node_modules/
+
+# PNPM lockfile
+pnpm-lock.yaml
+
+# Build outputs (backend, frontend, packages)
 dist/
-.env.local
-.DS_Store
+**/dist/
+build/
+**/build/
+
+# Vite / React / Frontend
 *.log
+*.env
+.env.local
+.env.*.local
+.vite/
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.swp

@@ -1,4 +1,10 @@
 packages:
-  - "apps/frontend"
-  - "apps/backend"
-  - "packages/*"
+  - apps/*
+  - packages/*
+  - packages/shared/*
+
+ignoredBuiltDependencies:
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
