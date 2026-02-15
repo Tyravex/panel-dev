@@ -3,7 +3,7 @@ node_modules/
 **/node_modules/
 
 # PNPM lockfile
-pnpm-lock.yaml
+#pnpm-lock.yaml
 
 # Build outputs (backend, frontend, packages)
 dist/
