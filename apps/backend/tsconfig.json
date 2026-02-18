@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
   },
   "references": [
     {

@@ -1,23 +1,19 @@
-version: '3.9'
+version: "3.9"
 
 services:
   postgres:
-    image: postgres:16-alpine
-    container_name: tyravex-postgres
+    image: postgres:15
+    container_name: tyravex_postgres
     restart: always
     environment:
-      POSTGRES_USER: tyravex
-      POSTGRES_PASSWORD: tyravexpass
-      POSTGRES_DB: tyravex_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tyravex
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U tyravex"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+  pgdata:
+    driver: local

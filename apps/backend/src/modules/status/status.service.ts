@@ -27,7 +27,7 @@ export class StatusService {
       dbStatus.status = 'fail';
     }
 
-    // 🧠 Redis check
+    // Redis check
     if (this.redis) {
       try {
         const start = Date.now();
