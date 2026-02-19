@@ -17,6 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: JWTPayload): Promise<UserDTO> {
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
+      include: {
+        role: {
+          include: {
+            permissions: true,
+          },
+        },
+      },
     });
 
     if (!user) {
@@ -27,7 +34,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: user.id,
       email: user.email,
       username: user.username,
-      role: user.role,
+
+      role: user.role?.name,
+      permissions: user.role?.permissions.map(p => p.name) ?? [],
+
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

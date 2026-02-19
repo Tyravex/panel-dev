@@ -9,7 +9,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(
     usernameOrEmail: string,
@@ -18,6 +18,13 @@ export class AuthService {
     const user = await this.prisma.user.findFirst({
       where: {
         OR: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
+      },
+      include: {
+        role: {
+          include: {
+            permissions: true,
+          },
+        },
       },
     });
 
@@ -33,6 +40,7 @@ export class AuthService {
       sub: user.id,
       email: user.email,
       role: user.role,
+      permissions: user.permissions,
     };
 
     const access_token = this.jwtService.sign(payload, {
@@ -68,7 +76,11 @@ export class AuthService {
         username,
         email,
         password: hashed,
-        role,
+        role: {
+          connect: {
+            name: role,
+          },
+        },
       },
     });
 
@@ -80,7 +92,10 @@ export class AuthService {
       id: user.id,
       email: user.email,
       username: user.username,
-      role: user.role,
+
+      role: user.role?.name,
+      permissions: user.role?.permissions.map((p: any) => p.name) ?? [],
+
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
