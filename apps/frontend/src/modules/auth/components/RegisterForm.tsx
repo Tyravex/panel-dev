@@ -1,15 +1,28 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import { registerApi } from "../api/auth.api";
 import { AuthCard } from "./AuthCard";
 
 export const RegisterForm = () => {
-  const [email,setEmail]=useState("");
-  const [username,setUsername]=useState("");
-  const [password,setPassword]=useState("");
+  const { login } = useAuth();
+  const nav = useNavigate();
 
-  const submit = async(e:any)=>{
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const submit = async (e: any) => {
     e.preventDefault();
-    await registerApi({email,username,password});
+
+    const data = await registerApi({
+      username,
+      email,
+      password,
+    });
+
+    login(data);
+    nav('/');
   };
 
   return (

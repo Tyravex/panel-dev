@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { loginApi } from "../api/auth.api";
-import { useAuth } from "../store/auth.store";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import { AuthCard } from "./AuthCard";
 
 export const LoginForm = () => {
   const { login } = useAuth();
+  const nav = useNavigate();
 
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const submit = async (e:any)=>{
+  const submit = async (e: any) => {
     e.preventDefault();
-    const data = await loginApi({email,password});
+
+    const data = await loginApi({
+      usernameOrEmail,
+      password,
+    });
+
     login(data);
+    nav('/');
   };
 
   return (
@@ -21,9 +29,9 @@ export const LoginForm = () => {
 
         <input
           className="w-full p-3 rounded bg-background border border-gray-700"
-          placeholder="Email"
-          value={email}
-          onChange={e=>setEmail(e.target.value)}
+          placeholder="Email or username"
+          value={usernameOrEmail}
+          onChange={(e) => setUsernameOrEmail(e.target.value)}
         />
 
         <input
@@ -31,7 +39,7 @@ export const LoginForm = () => {
           className="w-full p-3 rounded bg-background border border-gray-700"
           placeholder="Password"
           value={password}
-          onChange={e=>setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
 
         <button className="w-full bg-primary hover:opacity-90 p-3 rounded font-semibold">

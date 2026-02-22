@@ -1,15 +1,30 @@
 import { env } from '@/config/env';
-import { fetcher } from '@/shared/utils/fetcher';
-import { LoginRequest, RegisterRequest } from '../types';
 
-export const loginApi = (data: LoginRequest) =>
-  fetcher(`${env.api}/auth/login`, {
+export const loginApi = async (data: {
+  usernameOrEmail: string;
+  password: string;
+}) => {
+  const res = await fetch(`${env.api}/auth/login`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 
-export const registerApi = (data: RegisterRequest) =>
-  fetcher(`${env.api}/auth/register`, {
+  if (!res.ok) throw new Error('Login failed');
+  return res.json();
+};
+
+export const registerApi = async (data: {
+  username: string;
+  email: string;
+  password: string;
+}) => {
+  const res = await fetch(`${env.api}/auth/register`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+
+  if (!res.ok) throw new Error('Register failed');
+  return res.json();
+};
