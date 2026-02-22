@@ -1,0 +1,44 @@
+import { useState } from "react";
+import { registerApi } from "../api/auth.api";
+import { AuthCard } from "./AuthCard";
+
+export const RegisterForm = () => {
+  const [email,setEmail]=useState("");
+  const [username,setUsername]=useState("");
+  const [password,setPassword]=useState("");
+
+  const submit = async(e:any)=>{
+    e.preventDefault();
+    await registerApi({email,username,password});
+  };
+
+  return (
+    <AuthCard title="Create account">
+      <form onSubmit={submit} className="space-y-4">
+
+        <input className="w-full p-3 rounded bg-background border border-gray-700"
+          placeholder="Username"
+          value={username}
+          onChange={e=>setUsername(e.target.value)}
+        />
+
+        <input className="w-full p-3 rounded bg-background border border-gray-700"
+          placeholder="Email"
+          value={email}
+          onChange={e=>setEmail(e.target.value)}
+        />
+
+        <input type="password"
+          className="w-full p-3 rounded bg-background border border-gray-700"
+          placeholder="Password"
+          value={password}
+          onChange={e=>setPassword(e.target.value)}
+        />
+
+        <button className="w-full bg-secondary text-black p-3 rounded font-semibold">
+          Register
+        </button>
+      </form>
+    </AuthCard>
+  );
+};

@@ -1,13 +1,10 @@
-import { useState } from 'react'
+import { AppRouter } from "./app/router";
+import { AppProviders } from "./app/providers";
 
 export default function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <p className="read-the-docs">
-        Click on the logos to learn more
-      </p>
-    </>
-  )
+    <AppProviders>
+      <AppRouter />
+    </AppProviders>
+  );
 }

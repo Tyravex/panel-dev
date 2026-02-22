@@ -4,7 +4,12 @@
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@shared/types": ["../../packages/types/src"]
+    }
   },
   "references": [
     { "path": "../../packages/types" }
