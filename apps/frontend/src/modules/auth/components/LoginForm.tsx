@@ -25,26 +25,28 @@ export const LoginForm = () => {
 
   return (
     <AuthCard title="Login">
-      <form onSubmit={submit} className="space-y-4">
+      <form onSubmit={submit} className="text-2xl font-semibold mb-6">
+        <div className="space-y-4">
+          <input
+            placeholder="Username or email"
+            value={usernameOrEmail}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
+            className="w-full rounded-lg bg-white/10 p-3 outline-none"
+          />
 
-        <input
-          className="w-full p-3 rounded bg-background border border-gray-700"
-          placeholder="Email or username"
-          value={usernameOrEmail}
-          onChange={(e) => setUsernameOrEmail(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-lg bg-white/10 p-3 outline-none"
+          />
 
-        <input
-          type="password"
-          className="w-full p-3 rounded bg-background border border-gray-700"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+          <button className="w-full rounded-lg bg-white text-black p-3 font-semibold">
+            Login
+          </button>
+        </div>
 
-        <button className="w-full bg-primary hover:opacity-90 p-3 rounded font-semibold">
-          Login
-        </button>
       </form>
     </AuthCard>
   );

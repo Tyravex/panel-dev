@@ -2,20 +2,23 @@ import { Outlet } from "react-router-dom";
 
 export const AuthLayout = () => {
   return (
-    <div className="min-h-screen grid md:grid-cols-2">
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-black text-white">
       
-      {/* LEFT branding */}
-      <div className="hidden md:flex flex-col justify-center p-12 bg-surface">
-        <h1 className="text-4xl font-bold">
-          Tyravex Panel
-        </h1>
+      {/* LEFT */}
+      <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-slate-900 to-black">
+        <div>
+          <h1 className="text-3xl font-bold">Tyravex</h1>
+          <p className="text-white/60 mt-2">
+            Manage servers. Simple. Fast.
+          </p>
+        </div>
 
-        <p className="mt-4 text-gray-400">
-          Modern infrastructure management platform
-        </p>
+        <div className="text-white/40 text-sm">
+         Tyravex © {new Date().getFullYear()}
+        </div>
       </div>
 
-      {/* RIGHT form */}
+      {/* RIGHT */}
       <div className="flex items-center justify-center p-6">
         <Outlet />
       </div>

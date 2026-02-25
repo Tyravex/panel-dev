@@ -29,26 +29,26 @@ export const RegisterForm = () => {
     <AuthCard title="Create account">
       <form onSubmit={submit} className="space-y-4">
 
-        <input className="w-full p-3 rounded bg-background border border-gray-700"
+        <input className="w-full rounded-lg bg-white/10 p-3 outline-none"
           placeholder="Username"
           value={username}
           onChange={e=>setUsername(e.target.value)}
         />
 
-        <input className="w-full p-3 rounded bg-background border border-gray-700"
+        <input className="w-full rounded-lg bg-white/10 p-3 outline-none"
           placeholder="Email"
           value={email}
           onChange={e=>setEmail(e.target.value)}
         />
 
         <input type="password"
-          className="w-full p-3 rounded bg-background border border-gray-700"
+          className="w-full rounded-lg bg-white/10 p-3 outline-none"
           placeholder="Password"
           value={password}
           onChange={e=>setPassword(e.target.value)}
         />
 
-        <button className="w-full bg-secondary text-black p-3 rounded font-semibold">
+        <button className="w-full rounded-lg bg-white text-black p-3 font-semibold">
           Register
         </button>
       </form>
