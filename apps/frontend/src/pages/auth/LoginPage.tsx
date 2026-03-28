@@ -12,7 +12,7 @@ export const LoginPage = () => {
 
     const submit = async (e: any) => {
         e.preventDefault();
-
+        console.log(e.accessToken)
         await login({
             usernameOrEmail,
             password,

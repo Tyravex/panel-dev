@@ -17,7 +17,10 @@ export class AuthService {
   ): Promise<UserDTO | null> {
     const user = await this.prisma.user.findFirst({
       where: {
-        OR: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
+        OR: [
+          { email: usernameOrEmail },
+          { username: usernameOrEmail }
+        ],
       },
       include: {
         role: {
@@ -51,7 +54,7 @@ export class AuthService {
       expiresIn: '7d',
       secret: process.env.JWT_REFRESH_SECRET,
     });
-
+    console.log(user)
     return {
       access_token,
       refresh_token,
@@ -93,9 +96,8 @@ export class AuthService {
       email: user.email,
       username: user.username,
 
-      role: user.role?.name,
+      role: user.role?.name ?? null,
       permissions: user.role?.permissions.map((p: any) => p.name) ?? [],
-
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

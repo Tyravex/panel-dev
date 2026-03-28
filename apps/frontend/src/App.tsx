@@ -7,7 +7,7 @@ function App() {
   const login = useAuthStore((s) => s.login);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
 
     if (token) {
       login({
