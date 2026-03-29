@@ -4,18 +4,20 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
 
 model User {
-  id       String @id @default(cuid())
+  id       Int @id @default(autoincrement())
   username String @unique
   email    String @unique
   password String
 
   roleId String?
   role   Role?   @relation(fields: [roleId], references: [id])
+
+  servers   Server[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -32,4 +34,14 @@ model Permission {
   id    String @id @default(cuid())
   name  String @unique
   roles Role[]
+}
+
+model Server {
+  id     Int    @id @default(autoincrement())
+  name   String
+
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
 }

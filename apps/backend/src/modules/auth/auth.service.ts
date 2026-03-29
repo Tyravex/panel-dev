@@ -1,9 +1,9 @@
+import * as bcrypt from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
+import { AuthTokenResponse, UserDTO } from '@shared/types';
+// Services
 import { PrismaService } from '../../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import { AuthTokenResponse, UserDTO } from '@shared/types';
-import * as bcrypt from 'bcryptjs';
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -79,11 +79,11 @@ export class AuthService {
         username,
         email,
         password: hashed,
-        role: {
-          connect: {
-            name: role,
-          },
-        },
+        // role: {
+        //   connect: {
+        //     name: role,
+        //   },
+        // },
       },
     });
 

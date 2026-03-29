@@ -13,6 +13,7 @@ export const useAuth = () => {
     const token =
       res.access_token ||
       res.accessToken ||
+      res?.data?.access_Token ||
       res?.data?.accessToken;
 
     login({

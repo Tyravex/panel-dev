@@ -8,4 +8,5 @@ import { PrismaModule } from '../../prisma/prisma.module';
   providers: [StatusService, PrismaModule],
   controllers: [StatusController],
 })
+
 export class StatusModule {}

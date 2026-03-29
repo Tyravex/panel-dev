@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaModule } from './prisma/prisma.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { StatusModule } from './modules/status/status.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './rbac/guards/roles.guard';
+import { RolesGuard } from '@/rbac/guards/roles.guard';
+// Modules
+import { PrismaModule } from '@/prisma/prisma.module';
+import { UsersModule } from "@/modules/users/users.module";
+import { AuthModule } from '@/modules/auth/auth.module';
+import { StatusModule } from '@/modules/status/status.module';
+import { ServerModule } from "@/modules/server/server.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,6 +15,8 @@ import { RolesGuard } from './rbac/guards/roles.guard';
     }),
     PrismaModule,
     StatusModule,
+    UsersModule,
+    ServerModule,
     AuthModule,
   ],
   controllers: [],
@@ -22,4 +27,5 @@ import { RolesGuard } from './rbac/guards/roles.guard';
     }
   ],
 })
+
 export class AppModule {}

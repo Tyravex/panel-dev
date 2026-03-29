@@ -29,3 +29,4 @@ build/
 # Temporary files
 *.tmp
 *.swp
+/apps/backend/prisma/migrations
