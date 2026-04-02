@@ -1,37 +1,21 @@
 import { create } from "zustand";
 
-interface User {
-  id: string;
-  email: string;
-}
-
+// Global auth state (frontend only stores USER, not token)
 interface AuthState {
-  user: User | null;
-  accessToken: string | null;
+  user: any | null; // current authenticated user
+  isLoading: boolean; // used to prevent flicker during auth check
 
-  login: (data: { user: User; accessToken: string }) => void;
+  setUser: (user: any) => void;
   logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  accessToken: null,
+  isLoading: true, // initially true until we verify auth
 
-  login: ({ user, accessToken }) => {
-    localStorage.setItem("accessToken", accessToken);
+  // Set user after successful /auth/me call
+  setUser: (user) => set({ user, isLoading: false }),
 
-    set({
-      user,
-      accessToken,
-    });
-  },
-
-  logout: () => {
-    localStorage.removeItem("accessToken");
-
-    set({
-      user: null,
-      accessToken: null,
-    });
-  },
+  // Clears user (does NOT remove cookie, backend should handle that)
+  logout: () => set({ user: null }),
 }));

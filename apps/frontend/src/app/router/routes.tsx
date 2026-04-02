@@ -1,10 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-// Layouts
 import { MainLayout } from "@/layouts/MainLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
-// Routes
 import { ProtectedRoute } from "./ProtectedRoute";
-// Pages
 import { DashboardPage } from "@/pages/dashboard/DashboardPage";
 import { ServerDetailsPage } from "@/pages/servers/ServerDetailsPage";
 import { LoginPage } from "@/pages/auth/LoginPage";

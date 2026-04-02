@@ -7,17 +7,12 @@ export const useAuth = () => {
   const handleLogin = async (data: any) => {
     const res = await loginApi(data);
 
-    console.log('FULL RESPONSE:', res);
-    console.log('accessToken:', res.access_token);
-
     const token =
-      res.access_token ||
-      res.accessToken ||
-      res?.data?.access_Token ||
-      res?.data?.accessToken;
+      res.data.access_token ||
+      res.data.accessToken;
 
     login({
-      user: res.user,
+      user: res.data.user,
       accessToken: token,
     });
   };

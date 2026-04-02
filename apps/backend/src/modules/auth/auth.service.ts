@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcryptjs';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthTokenResponse, UserDTO } from '@shared/types';
-// Services
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -19,7 +19,7 @@ export class AuthService {
       where: {
         OR: [
           { email: usernameOrEmail },
-          { username: usernameOrEmail }
+          { username: usernameOrEmail },
         ],
       },
       include: {
@@ -31,11 +31,13 @@ export class AuthService {
       },
     });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      return this.toUserDTO(user);
-    }
+    if (!user) return null;
 
-    return null;
+    // Compare hashed password
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) return null;
+
+    return this.toUserDTO(user);
   }
 
   async login(user: UserDTO): Promise<AuthTokenResponse> {
@@ -46,15 +48,17 @@ export class AuthService {
       permissions: user.permissions,
     };
 
+    // Short-lived access token
     const access_token = this.jwtService.sign(payload, {
-      expiresIn: '3600s',
+      expiresIn: '1h',
     });
 
+    // Long-lived refresh token (different secret!)
     const refresh_token = this.jwtService.sign(payload, {
       expiresIn: '7d',
       secret: process.env.JWT_REFRESH_SECRET,
     });
-    console.log(user)
+
     return {
       access_token,
       refresh_token,
@@ -62,15 +66,34 @@ export class AuthService {
     };
   }
 
-  async refreshToken(user: UserDTO): Promise<AuthTokenResponse> {
-    return this.login(user);
+  async refreshToken(refreshToken: string) {
+
+    if (!process.env.JWT_REFRESH_SECRET) {
+      throw new Error('JWT_REFRESH_SECRET missing');
+    }
+
+    try {
+      // Verify refresh token
+      const payload = this.jwtService.verify(refreshToken, {
+        secret: process.env.JWT_REFRESH_SECRET,
+      });
+
+      // Issue new access token
+      const access_token = this.jwtService.sign({
+        sub: payload.sub,
+        email: payload.email,
+      });
+
+      return { access_token };
+    } catch {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
   }
 
   async register(
     username: string,
     email: string,
     password: string,
-    role = 'user',
   ): Promise<UserDTO> {
     const hashed = await bcrypt.hash(password, 10);
 
@@ -79,25 +102,21 @@ export class AuthService {
         username,
         email,
         password: hashed,
-        // role: {
-        //   connect: {
-        //     name: role,
-        //   },
-        // },
       },
     });
 
     return this.toUserDTO(user);
   }
 
+  // Maps Prisma user → clean DTO (no password leakage)
   private toUserDTO(user: any): UserDTO {
     return {
-      id: user.id,
+      id: Number(user.id),
       email: user.email,
       username: user.username,
-
       role: user.role?.name ?? null,
-      permissions: user.role?.permissions.map((p: any) => p.name) ?? [],
+      permissions:
+        user.role?.permissions.map((p: any) => p.name) ?? [],
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

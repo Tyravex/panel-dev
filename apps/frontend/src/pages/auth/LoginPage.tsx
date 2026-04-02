@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/features/auth/hooks/useAuth"
+import { loginApi, meApi } from "@/features/auth/api/auth.api";
 
 export const LoginPage = () => {
 
-    const { login } = useAuth();
     const navigate = useNavigate();
 
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -12,14 +11,34 @@ export const LoginPage = () => {
 
     const submit = async (e: any) => {
         e.preventDefault();
-        console.log(e.accessToken)
-        await login({
-            usernameOrEmail,
-            password,
-        });
+        
+        try {
+            // Send login request → backend sets cookie
+            await loginApi({
+                usernameOrEmail,
+                password,
+            });
+            // 🔥 IMPORTANT:
+            // We call /auth/me to confirm cookie works
+            // and backend recognizes user
+            await meApi();
+            
+            // Only after successful auth → navigate
+            navigate('/dashboard');
 
-        navigate('/dashboard');
-    };
+        } catch (err: any) {
+            console.error(err);
+
+            if (err.response?.status === 401) {
+                console.log('Invalid credentials');
+            } else {
+                console.log('Login failed');
+            }
+        }
+
+
+    }
+
     return (
         <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-8 shadow-xl">
 
