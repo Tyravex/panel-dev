@@ -53,14 +53,14 @@ export class AuthController {
     res.cookie('access_token', access_token, {
       httpOnly: true,
       sameSite: 'lax',
-      secure: true, // change to true in production (HTTPS)
+      secure: false, // change to true in production (HTTPS)
     });
 
     // Optional: store refresh token
     res.cookie('refresh_token', refresh_token, {
       httpOnly: true,
       sameSite: 'lax',
-      secure: true, // change to true in production (HTTPS)
+      secure: false, // change to true in production (HTTPS)
     });
 
     return { success: true };
@@ -91,7 +91,7 @@ export class AuthController {
     res.cookie('access_token', access_token, {
       httpOnly: true,
       sameSite: 'lax',
-      secure: true, // change to true in production (HTTPS)
+      secure: false, // change to true in production (HTTPS)
     });
 
     return { success: true };

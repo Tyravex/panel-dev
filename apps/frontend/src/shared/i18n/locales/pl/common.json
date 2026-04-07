@@ -1,0 +1,10 @@
+{
+  "Navbar": {
+    "Navigation": {
+        "dashboard": "Panel"
+    },
+    "language": "Język",
+    "settings": "Ustawienia",
+    "logout": "Wyloguj"
+  }
+}

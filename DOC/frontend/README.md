@@ -211,3 +211,63 @@ Keep layers separated:
 * routing → pages/app
 
 ---
+
+```
+src/
+├─ app/
+│ ├─ api/
+│ │ └─ axios.ts
+│ ├─ providers/
+│ │ ├─ AuthProvider.tsx
+│ │ ├─ QueryProvider.tsx
+│ │ ├─ ThemeProvider.tsx
+│ │ └─ index.ts
+│ ├─ router/
+│ │ ├─ ProtectedRoute.tsx
+│ │ ├─ RouterProvider.tsx
+│ │ └─ routes.tsx
+│ └─ store/
+│ └─ auth.store.ts
+├─ entities/
+│ ├─ User.ts
+│ └─ Server.ts
+├─ features/
+│ ├─ auth/
+│ │ ├─ api/
+│ │ │ └─ auth.api.ts
+│ │ ├─ hooks/
+│ │ │ └─ useAuth.ts
+│ │ └─ model/
+│ │ └─ useLogout.ts
+│ └─ theme/
+│ ├─ model/
+│ │ └─ useTheme.ts
+│ └─ ui/
+│ └─ ThemeSwitcher.tsx
+├─ layouts/
+│ ├─ AuthLayout/
+│ │ ├─ AuthLayout.tsx
+│ │ └─ index.ts
+│ └─ MainLayout/
+│ ├─ MainLayout.tsx
+│ └─ index.ts
+├─ pages/
+│ ├─ auth/
+│ │ ├─ LoginPage.tsx
+│ │ └─ RegisterPage.tsx
+│ ├─ dashboard/
+│ │ ├─ DashboardPage.tsx
+│ │ └─ ServerDetailsPage.tsx
+│ ├─ profile/
+│ │ └─ index.tsx
+│ └─ settings/
+│ └─ index.tsx
+└─ widgets/
+├─ navbar/
+│ └─ ui/
+│ └─ Navbar.tsx
+└─ server/
+└─ ServerCard.tsx
+└─ sidebar/
+└─ Sidebar.tsx
+```

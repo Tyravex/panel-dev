@@ -6,6 +6,16 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
+  async updatePreferences(
+    userId: Number,
+    data: { language?: string },
+  ) {
+    return this.prisma.user.update({
+      where: { id: Number(userId) },
+      data: { language: data.language },
+    });
+  }
+
   async findByUsernameOrEmail(usernameOrEmail: string) {
     return this.prisma.user.findFirst({
       where: {

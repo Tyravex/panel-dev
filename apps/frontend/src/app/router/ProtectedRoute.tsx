@@ -1,40 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, JSX } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuthStore } from "@/app/store/auth.store";
 import { meApi } from "@/features/auth/api/auth.api";
 
+interface ProtectedRouteProps {
+  children: JSX.Element;
+}
+
 // Protects routes that require authentication
-export const ProtectedRoute = ({ children }: any) => {
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, setUser, isLoading } = useAuthStore();
 
   useEffect(() => {
-    // Check if user is authenticated via backend
-    const checkAuth = async () => {
-      try {
-        const res = await meApi();
-        // If request succeeds → user is logged in
-        setUser(res.data);
-      } catch {
-        // If request fails → user is not authenticated
-        setUser(null);
-      }
-    };
-
-    // Only check if we don't already have user
     if (!user) {
-      checkAuth();
+      meApi()
+        .then(res => setUser(res.data))
+        .catch(() => setUser(null));
     }
   }, []);
 
-  // Prevent rendering before auth check completes
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  
-  // Redirect if not authenticated
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
+  if (isLoading) return <div>Loading...</div>;
+  if (!user) return <Navigate to="/login" />;
   return children;
 };

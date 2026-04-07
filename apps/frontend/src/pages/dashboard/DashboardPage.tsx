@@ -1,13 +1,15 @@
-import { ServerList } from "@/features/servers/components/ServerList";
+import { useUser } from '@/shared/store/user';
 
 export const DashboardPage = () => {
-  return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-4">
-        Welcome back, user 👋
-      </h1>
+   const user = useUser((state) => state.user);
+   
+   if (!user) return null;
 
-      <ServerList />
-    </div>
-  );
+    return (
+        <div>
+            <h1>Witaj, {user.username}</h1>
+            <p>Email: {user.email}</p>
+            <p>Lang : {user.language}</p>
+        </div>
+    );
 };

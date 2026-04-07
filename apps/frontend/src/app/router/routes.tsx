@@ -3,32 +3,35 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { DashboardPage } from "@/pages/dashboard/DashboardPage";
-import { ServerDetailsPage } from "@/pages/servers/ServerDetailsPage";
+import { ServerDetailsPage } from "@/pages/dashboard/ServerDetailsPage";
 import { LoginPage } from "@/pages/auth/LoginPage";
 import { RegisterPage } from "@/pages/auth/RegisterPage";
+import { ProfilePage } from "@/pages/profile";
+import { SettingsPage } from "@/pages/settings";
+import { AuthProvider } from "../providers/AuthProvider";
 
-export const AppRoutes = () => {
-  return (
-    <Routes>
-      
-      {/* AUTH */}
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Route>
+export const AppRoutes = () => (
+  <Routes>
+    {/* Auth routes */}
+    <Route element={<AuthLayout />}>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+    </Route>
 
-      {/* APP */}
-      <Route
-        element={
-          <ProtectedRoute>
+    {/* App routes */}
+    <Route
+      element={
+        <ProtectedRoute>
+          <AuthProvider>
             <MainLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/servers/:id" element={<ServerDetailsPage />} />
-      </Route>
-
-    </Routes>
-  );
-};
+          </AuthProvider>
+        </ProtectedRoute>
+      }
+    >
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/servers/:id" element={<ServerDetailsPage />} />
+    </Route>
+  </Routes>
+);

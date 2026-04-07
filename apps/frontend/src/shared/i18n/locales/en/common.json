@@ -1,0 +1,10 @@
+{
+  "Navbar": {
+    "Navigation": {
+        "dashboard": "Dashboard"
+    },
+    "language": "Language",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+}

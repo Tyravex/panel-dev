@@ -13,6 +13,9 @@ export interface UserDTO {
   id: string;
   username: string;
   email: string;
+  avatar?: String;
+
+  language?: string;
   role?: string;
   createdAt: Date;
   updatedAt?: Date;

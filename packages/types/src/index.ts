@@ -13,10 +13,12 @@ export interface UserDTO {
   id: number;
   username: string;
   email: string;
+  avatar?: String;
 
+  language?: string;
   role?: string;
   permissions?: string[];
-  
+
   createdAt: Date;
   updatedAt?: Date;
 }

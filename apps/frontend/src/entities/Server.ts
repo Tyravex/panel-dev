@@ -1,7 +1,8 @@
 export interface Server {
-  id: string;
+  id?: string;
   name: string;
   status: "online" | "offline";
+  players: number;
   cpu: number;
   ram: number;
 }
