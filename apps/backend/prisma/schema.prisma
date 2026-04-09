@@ -16,7 +16,8 @@ model User {
 
   avatar   String?
   language String  @default("en")
-
+  notifications Notification[]
+  
   roleId String?
   role   Role?   @relation(fields: [roleId], references: [id])
 
@@ -37,6 +38,15 @@ model Permission {
   id    String @id @default(cuid())
   name  String @unique
   roles Role[]
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  content   String
+  read      Boolean  @default(false)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Server {

@@ -1,10 +1,15 @@
 {
   "Navbar": {
     "Navigation": {
-        "dashboard": "Dashboard"
+      "dashboard": "Dashboard"
     },
-    "language": "Language",
-    "settings": "Settings",
-    "logout": "Logout"
+    "Notifications": {
+      "noNotifications": "No notifications"
+    },
+    "ProfileDropdown": {
+      "language": "Language",
+      "settings": "Settings",
+      "logout": "Logout"
+    }
   }
 }

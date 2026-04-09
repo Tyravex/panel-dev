@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "@/shared/api/client";
+import { registerApi } from "@/features/auth/api/auth.api";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -10,11 +10,12 @@ export const RegisterPage = () => {
 
   const submit = async (e: any) => {
     e.preventDefault();
-    await api("/auth/register", {
-      method: "POST",
-      body: JSON.stringify({ email, username, password }),
-    });
-    navigate("/login");
+    try {
+      await registerApi({ username, email, password });
+      navigate("/login");
+    } catch (err: any) {
+      console.error("Registration error:", err);
+    }
   };
 
   return (

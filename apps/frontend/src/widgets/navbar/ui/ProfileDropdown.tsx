@@ -46,7 +46,8 @@ export const ProfileDropdown = () => {
                 className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700"
             >
                 <img
-                    src={user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.username || "User")}`}
+                    //src={user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.username || "User")}`}
+                    src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.username || "User")}`}
                     alt="User Avatar"
                     className="w-6 h-6 rounded-full"
                 />
@@ -68,7 +69,8 @@ export const ProfileDropdown = () => {
                     {/* PROFILE */}
                     <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[#2a2f4a]">
                         <img
-                            src={user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.username || "User")}`}
+                            //src={user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.username || "User")}`}
+                            src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.username || "User")}`}
                             className="w-8 h-8 rounded-full"
                         />
                         <div>
@@ -80,12 +82,12 @@ export const ProfileDropdown = () => {
                     <LanguageSwitcher />
                     {/* SETTINGS */}
                     <div className="mb-3">
-                        <div className="text-xs text-gray-400 mb-1">{t("Navbar.settings")}</div>
+                        <div className="text-xs text-gray-400 mb-1">{t("Navbar.ProfileDropdown.settings")}</div>
                         <div
                             onClick={() => navigate("/settings")}
                             className="p-2 hover:bg-[#2a2f4a] rounded cursor-pointer"
                         >
-                            {t("Navbar.settings")}
+                            {t("Navbar.ProfileDropdown.settings")}
                         </div>
 
                     </div>
@@ -94,7 +96,7 @@ export const ProfileDropdown = () => {
                         onClick={logout}
                         className="p-2 hover:bg-[#2a2f4a] rounded cursor-pointer text-red-400"
                     >
-                        {t("Navbar.logout")}
+                        {t("Navbar.ProfileDropdown.logout")}
                     </button>
                 </motion.div>
             )}

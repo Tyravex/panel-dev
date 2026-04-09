@@ -32,7 +32,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <div ref={ref} className="relative mb-3">
-      <div className="text-xs text-gray-400 mb-1">{t("Navbar.language")}</div>
+      <div className="text-xs text-gray-400 mb-1">{t("Navbar.ProfileDropdown.language")}</div>
 
       {/* Trigger */}
       <button
